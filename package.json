@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rm -rf screenshots/*",
-    "dev": "yarn prebuild && export $(cat .env | xargs) && k6 run index.js"
+    "dev": "yarn prebuild && export $(cat .env | xargs) && k6 run src/index.js"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@types/k6": "^1.0.2"
+  }
 }
