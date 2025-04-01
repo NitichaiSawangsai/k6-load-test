@@ -37,7 +37,6 @@ export async function checkFrontend() {
 
     page = await PageLogin({ page, user });
     page = await PageDashboard({ page, user });
-  } catch (error) {
   } finally {
     await page?.close();
     await context?.close();
