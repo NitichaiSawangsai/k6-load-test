@@ -27,19 +27,19 @@ const users = [
 ];
 
 export async function checkFrontend() {
-  let page = await browser.newPage();
+  const context = await browser.newContext();
+  let page = await context.newPage();
   try {
     const user = users[__VU % users.length]; // เลือกบัญชีจากลิสต์แบบสุ่ม
     if (!user) {
-      console.error(`[VU-${__VU}] Error: User object is undefined.`);
       return;
     }
 
     page = await PageLogin({ page, user });
     page = await PageDashboard({ page, user });
   } catch (error) {
-    console.error(`[VU-${__VU}] Error: ${error.message}`);
   } finally {
     await page?.close();
+    await context?.close();
   }
 }
