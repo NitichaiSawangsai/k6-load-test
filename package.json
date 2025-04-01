@@ -1,0 +1,11 @@
+{
+  "name": "load-test-web-k6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "rm -rf screenshots/*",
+    "dev": "yarn prebuild && export $(cat .env | xargs) && k6 run index.js"
+  },
+  "dependencies": {}
+}
