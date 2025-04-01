@@ -5,10 +5,11 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rm -rf screenshots/*",
-    "dev": "yarn prebuild && export $(cat .env | xargs) && k6 run src/index.js"
+    "dev": "yarn eslint && yarn prebuild && export $(cat .env | xargs) && k6 run src/index.js"
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/k6": "^1.0.2"
+    "@types/k6": "^1.0.2",
+    "eslint": "^9.23.0"
   }
 }

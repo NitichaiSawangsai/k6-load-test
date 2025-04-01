@@ -1,10 +1,11 @@
 import { browser } from "k6/browser";
 import { PageLogin } from "./login.js";
+import { PageDashboard } from "./dashboard.js";
 
 export const options = {
   scenarios: {
     browser: {
-      exec: "multiLoginTest",
+      exec: "checkFrontend",
       executor: "constant-vus",
       vus: 5, // จำนวนผู้ใช้พร้อมกัน
       duration: "40s",
@@ -18,14 +19,14 @@ export const options = {
 };
 
 const users = [
-  { email: "eakaposi@scg.com" }, // role admin
+  { email: "nitichas@scg.com" }, // role admin
   { email: "iqbala@scg.com" }, // role Line Manager
   { email: "sawitsri@scg.com" }, // role Team Member
   { email: "sutachoc@scg.com" }, // role Lead
   { email: "kunanonp@scg.com" }, // role CDO
 ];
 
-export async function multiLoginTest() {
+export async function checkFrontend() {
   let page = await browser.newPage();
   try {
     const user = users[__VU % users.length]; // เลือกบัญชีจากลิสต์แบบสุ่ม
@@ -34,7 +35,8 @@ export async function multiLoginTest() {
       return;
     }
 
-    page = await PageLogin({ page, users, user });
+    page = await PageLogin({ page, user });
+    page = await PageDashboard({ page, user });
   } finally {
     await page?.close();
   }
