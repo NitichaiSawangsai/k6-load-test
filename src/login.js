@@ -6,7 +6,10 @@ const PASSWORD_WEB = __ENV.PASSWORD_WEB;
 export const PageLogin = async ({ page, user }) => {
   console.log(`++++  PageLogin user: ${user?.email} ++++`);
   if (user) {
-    await page.goto(`${BASE_URL_WEB}/auth/login`);
+    await page.goto(`${BASE_URL_WEB}/auth/login`, {
+      waitUntil: "networkidle", // รอให้ Network ไม่มี request ค้าง
+      timeout: 6000000,
+    });
     await page.waitForLoadState("networkidle");
     await page.screenshot({
       path: `screenshots/login/${__VU}/login-before-submit.png`,
@@ -26,8 +29,7 @@ export const PageLogin = async ({ page, user }) => {
       })
       .catch(() => {});
 
-    console.log(`[VU-${__VU}] ${user?.email} Redirected to: ${page.url()}`);
-
+    // console.log(`[VU-${__VU}] ${user?.email} Redirected to: ${page.url()}`);
     check(page, {
       "Login success and redirected to home": () => {
         return page?.url()?.indexOf("/page") > -1;

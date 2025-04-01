@@ -8,7 +8,7 @@ export const options = {
       exec: "checkFrontend",
       executor: "constant-vus",
       vus: 5, // จำนวนผู้ใช้พร้อมกัน
-      duration: "40s",
+      duration: "220s",
       options: {
         browser: {
           type: "chromium",
@@ -37,6 +37,8 @@ export async function checkFrontend() {
 
     page = await PageLogin({ page, user });
     page = await PageDashboard({ page, user });
+  } catch (error) {
+    console.error(`[VU-${__VU}] Error: ${error.message}`);
   } finally {
     await page?.close();
   }
