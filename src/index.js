@@ -1,6 +1,7 @@
 import { browser } from "k6/browser";
 import { PageLogin } from "./login.js";
 import { PageDashboard } from "./dashboard.js";
+import { users } from "./../secrets/user.js";
 
 export const options = {
   scenarios: {
@@ -17,14 +18,6 @@ export const options = {
     },
   },
 };
-
-const users = [
-  { email: "nitichas@scg.com" }, // role admin
-  { email: "iqbala@scg.com" }, // role Line Manager
-  { email: "sawitsri@scg.com" }, // role Team Member
-  { email: "sutachoc@scg.com" }, // role Lead
-  { email: "kunanonp@scg.com" }, // role CDO
-];
 
 export async function checkFrontend() {
   const context = await browser.newContext();

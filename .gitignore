@@ -4,3 +4,19 @@ screenshots/*
 videos/*
 
 node_modules
+secrets/*
+
+
+# debug
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+.vscode/*
+
+
+# misc
+.DS_Store
+*.pem
