@@ -1,10 +1,23 @@
 import { browser } from "k6/browser";
-import { PageLogin } from "./login.js";
-import { PageDashboard } from "./dashboard.js";
+import http from "k6/http";
+import { PageLogin } from "./web/login.js";
+import { PageDashboard } from "./web/dashboard.js";
+import { LoginAPI } from "./api/login.js";
+import { NotificationAPI } from "./api/notification.js";
 import { users } from "./../secrets/user.js";
 
 export const options = {
   scenarios: {
+    load: {
+      exec: "checkBackend",
+      executor: "ramping-vus",
+      stages: [
+        { duration: "5s", target: 5 },
+        { duration: "10s", target: 5 },
+        { duration: "5s", target: 0 },
+      ],
+      // startTime: "10s",
+    },
     browser: {
       exec: "checkFrontend",
       executor: "constant-vus",
@@ -18,6 +31,15 @@ export const options = {
     },
   },
 };
+
+export async function checkBackend() {
+  const user = users[__VU % users.length];
+  if (!user) {
+    return;
+  }
+  const { authToken } = await LoginAPI({ http, user });
+  await NotificationAPI({ http, user, authToken });
+}
 
 export async function checkFrontend() {
   const context = await browser.newContext();

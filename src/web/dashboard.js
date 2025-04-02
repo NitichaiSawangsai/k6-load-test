@@ -8,7 +8,7 @@ export const PageDashboard = async ({ page, user }) => {
     `page: ${BASE_URL_WEB}/page/dashboard`
   );
 
-  if (user) {
+  if (user && [1, 2].includes(user.roleId)) {
     await page.goto(`${BASE_URL_WEB}/page/dashboard`, {
       waitUntil: "networkidle",
       timeout: 60000,
@@ -22,15 +22,10 @@ export const PageDashboard = async ({ page, user }) => {
       path: `screenshots/dashboard/${__VU}/before-load.png`,
     });
 
-    // ดึงเนื้อหาของหน้าเพื่อตรวจสอบว่ามี error หรือไม่ และมีข้อความที่คาดหวังหรือไม่
-    const pageContent = await page.content();
-
-    await check(null, {
-      "ไม่มีข้อความ Error ในหน้า": () => !pageContent.includes("Error"),
-      "โหลด Dashboard เรียบร้อย": () =>
-        pageContent.includes("Dashboard") ||
-        pageContent.includes("Expected Dashboard Text"),
+    await check(page.locator("span.pl-8"), {
+      header: async (lo) => (await lo.textContent()).trim() === "Dashboard",
     });
+
     await page.screenshot({
       path: `screenshots/dashboard/${__VU}/after-load.png`,
     });

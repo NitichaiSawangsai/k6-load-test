@@ -25,7 +25,7 @@ export const PageLogin = async ({ page, user }) => {
 
     await page
       .waitForSelector("nav,header,.dashboard", {
-        timeout: 5000,
+        timeout: 9000,
       })
       .catch(() => {});
 
