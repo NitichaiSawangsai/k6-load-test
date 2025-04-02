@@ -8,8 +8,8 @@ export const PageTeam = async ({ page, user }) => {
     `page: ${BASE_URL_WEB}/page/teams`
   );
 
-  if (user && [1, 2].includes(user.roleId)) {
-    await page.goto(`${BASE_URL_WEB}/page/teams/admin/Digital Office/solutiondelivery/softwareengineering?ids=423,438,453,468,483,498,513`, {
+  if (user && [1].includes(user.roleId)) {
+    await page.goto(`${BASE_URL_WEB}/page/teams/admin/Digital%20Office/solutiondelivery/softwareengineering?ids=423%2C438%2C453%2C468%2C483%2C498%2C513`, {
       waitUntil: "networkidle",
       timeout: 60000,
     });

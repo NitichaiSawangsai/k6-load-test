@@ -29,7 +29,6 @@ export const PageLogin = async ({ page, user }) => {
       })
       .catch(() => {});
 
-    // console.log(`[VU-${__VU}] ${user?.email} Redirected to: ${page.url()}`);
     check(page, {
       "Login success and redirected to home": () => {
         return page?.url()?.indexOf("/page") > -1;

@@ -5,7 +5,7 @@ export const NotificationAPI = async ({ http, user, authToken }) => {
   if (user?.email) {
     let [notiAll, notiUnread] = await Promise.all([
       http.post(
-        `${BASE_URL_API}/notification,/all`,
+        `${BASE_URL_API}/notification/all`,
         {
           page: 1,
           perPage: 5,
